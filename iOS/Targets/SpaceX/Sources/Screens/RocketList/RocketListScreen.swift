@@ -55,8 +55,7 @@ struct RocketListScreen<ViewModel>: View where ViewModel: RocketListScreenViewMo
             viewModel.onAppear()
         }
         .navigationDestination(item: $viewModel.selectedRocketId) { rocketId in
-            print("RocketId")
-            return RocketDetailScreen(viewModel: RocketDetailScreenViewModelImpl())
+            Screens.rocketDetail
         }
     }
 

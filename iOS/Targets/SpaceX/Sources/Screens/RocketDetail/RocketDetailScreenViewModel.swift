@@ -1,5 +1,6 @@
 import Foundation
 import SpaceXKit
+import Factory
 
 @MainActor
 public protocol RocketDetailScreenViewModel: ObservableObject {
@@ -21,20 +22,18 @@ public enum RocketDetailScreenState {
 public class RocketDetailScreenViewModelImpl {
 
     // MARK: - Dependencies
-    private let repository: RocketRepository
+    @Injected(\RepositoriesContainer.rocketRepository) var repository: RocketRepository
     private let rocketId: String
 
     // MARK: - Properties
     @Published public var screenState: RocketDetailScreenState = .loading
 
     // MARK: - Init
-    public init(repository: RocketRepository, rocketId: String) {
-        self.repository = repository
+    public init(rocketId: String) {
         self.rocketId = rocketId
     }
 
     init() {
-        self.repository = RocketRepositoryMock()
         self.rocketId = "Fake"
     }
 

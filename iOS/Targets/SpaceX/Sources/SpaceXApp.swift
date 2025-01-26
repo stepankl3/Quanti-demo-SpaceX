@@ -6,7 +6,7 @@ struct SpaceXApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                RocketListScreen(viewModel: RocketListScreenViewModelImpl())
+                Screens.rocketList
             }
         }
     }

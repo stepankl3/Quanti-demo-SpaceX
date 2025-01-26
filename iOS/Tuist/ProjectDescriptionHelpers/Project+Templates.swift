@@ -15,8 +15,9 @@ extension Project {
                            additionalTargets: [String]) -> Project {
 
         var targets = makeAppTargets(name: name,
+                                     bundleId: bundleId,
                                      destinations: destinations,
-                                     dependencies: additionalTargets.map { TargetDependency.target(name: $0) })
+                                     dependencies: dependencies + additionalTargets.map { TargetDependency.target(name: $0) })
         targets += additionalTargets.flatMap({ makeFrameworkTargets(name: $0,
                                                                     bundleId: bundleId,
                                                                     destinations: destinations,
@@ -37,7 +38,7 @@ extension Project {
                                              dependencies: [TargetDependency]) -> [Target] {
         let sources = Target(name: name,
                              destinations: destinations,
-                             product: .framework,
+                             product: .dynamicLibrary,
                              bundleId: "\(bundleId).\(name)",
                              infoPlist: .default,
                              sources: ["Targets/\(name)/Sources/**"],
@@ -55,7 +56,10 @@ extension Project {
     }
 
     /// Helper function to create the application target and the unit test target.
-    private static func makeAppTargets(name: String, destinations: Destinations, dependencies: [TargetDependency]) -> [Target] {
+    private static func makeAppTargets(name: String,
+                                       bundleId: String,
+                                       destinations: Destinations,
+                                       dependencies: [TargetDependency]) -> [Target] {
         let infoPlist: [String: Plist.Value] = [
             "CFBundleShortVersionString": "1.0",
             "CFBundleVersion": "1",
@@ -66,7 +70,7 @@ extension Project {
             name: name,
             destinations: destinations,
             product: .app,
-            bundleId: "io.tuist.\(name)",
+            bundleId: "\(bundleId).\(name)",
             infoPlist: .extendingDefault(with: infoPlist),
             sources: ["Targets/\(name)/Sources/**"],
             resources: ["Targets/\(name)/Resources/**"],
@@ -77,7 +81,7 @@ extension Project {
             name: "\(name)Tests",
             destinations: destinations,
             product: .unitTests,
-            bundleId: "io.tuist.\(name)Tests",
+            bundleId: "\(bundleId).\(name)Tests",
             infoPlist: .default,
             sources: ["Targets/\(name)/Tests/**"],
             dependencies: [
