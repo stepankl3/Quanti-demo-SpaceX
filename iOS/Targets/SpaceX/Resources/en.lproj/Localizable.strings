@@ -24,4 +24,10 @@
 "rocketDetailScreen.sectionStage.fuel" = "tons of fuel";
 "rocketDetailScreen.sectionStage.burnTime" = "seconds burn time";
 "rocketDetailScreen.sectionPhotos.title" = "Photos";
+"rocketDetailScreen.navigaton.launch" = "Launch";
+"launchScreen.title" = "Launch";
+"launchScreen.ready" = "Move your phone up to launch the rocket";
+"launchScreen.launched" = "Launch successful!";
+"launchScreen.launchButton" = "Launch rocket";
+
 

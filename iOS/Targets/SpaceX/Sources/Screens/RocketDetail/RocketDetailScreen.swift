@@ -30,6 +30,23 @@ struct RocketDetailScreen<ViewModel>: View where ViewModel: RocketDetailScreenVi
         }
         .navigationTitle(viewModel.screenTitle)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    viewModel.onLaunchTapped()
+                }) {
+                    Text(SpaceXStrings.RocketDetailScreen.Navigation.launch)
+                        .font(.headline)
+                        .foregroundColor(.blue)
+                }
+            }
+        }
+        .navigationDestination(item: $viewModel.destination) { destination in
+            switch destination {
+            case .launch:
+                return Screens.launchScreen
+            }
+        }
         .onAppear {
             viewModel.onAppear()
         }

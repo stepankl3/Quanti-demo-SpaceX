@@ -13,4 +13,9 @@ enum Screens {
         let viewModel = RocketDetailScreenViewModelImpl(rocketId: id)
         return RocketDetailScreen(viewModel: viewModel)
     }
+
+    static var launchScreen: LaunchScreen<LaunchScreenViewModelImpl> {
+        let viewModel = LaunchScreenViewModelImpl()
+        return LaunchScreen(viewModel: viewModel)
+    }
 }

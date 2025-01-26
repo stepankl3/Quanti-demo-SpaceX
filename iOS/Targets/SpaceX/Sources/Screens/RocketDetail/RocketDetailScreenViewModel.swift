@@ -7,6 +7,7 @@ protocol RocketDetailScreenViewModel: ObservableObject {
 
     var screenState: RocketDetailScreenState { get }
     var screenTitle: String { get }
+    var destination: RocketDetailScreenDestinations? { get set }
 
     func onAppear()
     func onLaunchTapped()
@@ -20,6 +21,10 @@ enum RocketDetailScreenState {
     case data(detail: RocketDetail)
 }
 
+enum RocketDetailScreenDestinations {
+    case launch
+}
+
 // MARK: - ViewModel Implementation
 @MainActor
 public class RocketDetailScreenViewModelImpl {
@@ -31,6 +36,7 @@ public class RocketDetailScreenViewModelImpl {
     // MARK: - Properties
     @Published var screenState: RocketDetailScreenState = .loading
     @Published var screenTitle: String = ""
+    @Published var destination: RocketDetailScreenDestinations?
 
     // MARK: - Init
     init(rocketId: String) {
@@ -55,10 +61,9 @@ public class RocketDetailScreenViewModelImpl {
 extension RocketDetailScreenViewModelImpl: RocketDetailScreenViewModel {
 
     func onLaunchTapped() {
-        print("Launch tapped")
+        destination = .launch
     }
     
-
     func onAppear() {
         loadRocketDetail()
     }
