@@ -23,6 +23,9 @@ struct RocketListScreen<ViewModel>: View where ViewModel: RocketListScreenViewMo
                 }
             }
         }
+        .refreshable {
+            viewModel.onPullToRefresh()
+        }
         .onAppear {
             viewModel.onAppear()
         }
@@ -47,6 +50,9 @@ extension RocketListScreen {
                 viewModel.onRocketTap(rocketId: rocket.id)
             }
             .padding(.vertical, 8)
+        }
+        .alignmentGuide(.listRowSeparatorLeading) {_ in 
+            16
         }
     }
 

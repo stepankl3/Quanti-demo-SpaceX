@@ -3,6 +3,7 @@ import SpaceXKit
 
 @MainActor
 class RocketListScreenViewModelMock: ObservableObject {
+
     // MARK: - Properties
     @Published var screenState: RocketListScreenState = .loading
     @Published var selectedRocketId: String?
@@ -21,5 +22,9 @@ extension RocketListScreenViewModelMock: RocketListScreenViewModel {
 
     func onRocketTap(rocketId: String) {
         print("On rocket tap \(rocketId)")
+    }
+
+    func onPullToRefresh() {
+        print("Pull to refresh")
     }
 }

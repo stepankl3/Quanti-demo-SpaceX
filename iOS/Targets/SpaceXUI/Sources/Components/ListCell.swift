@@ -16,7 +16,7 @@ public struct ListCell: View {
 
     // MARK: - Body
     public var body: some View {
-        HStack(spacing: 16) {
+        HStack(spacing: 8) {
             image
                 .resizable()
                 .aspectRatio(contentMode: .fit)
@@ -36,7 +36,7 @@ public struct ListCell: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .foregroundColor(Color(.secondaryText))
-                .frame(width: 24, height: 24)
+                .frame(width: 18, height: 18)
         }
         .padding(8)
     }

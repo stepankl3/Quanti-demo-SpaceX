@@ -1,3 +1,4 @@
+import Factory
 import Foundation
 import SpaceXKit
 
@@ -10,6 +11,7 @@ protocol RocketListScreenViewModel: ObservableObject {
     func onErrorTap()
     func onAppear()
     func onRocketTap(rocketId: String)
+    func onPullToRefresh()
 }
 
 enum RocketListScreenState {
@@ -22,26 +24,18 @@ enum RocketListScreenState {
 class RocketListScreenViewModelImpl: ObservableObject {
 
     // MARK: - Dependencies
-    private let repository: RocketRepository
+    @Injected(\RepositoriesContainer.rocketRepository) var rocketRepository
     // MARK: - Properties
     @Published var screenState: RocketListScreenState = .loading
     @Published var selectedRocketId: String?
 
 
-    // MARK: - Init
-    init(repository: RocketRepository) {
-        self.repository = repository
-    }
-
-    init() {
-        self.repository = RocketRepositoryMock()
-    }
-
+    // MARK: - Util functions
     func loadRockets() {
         Task {
             do {
                 screenState = .loading
-                let rockets = try await repository.getAllRockets()
+                let rockets = try await rocketRepository.getAllRockets()
                 screenState = .data(rockets: rockets)
             } catch {
                 screenState = .error
@@ -63,5 +57,9 @@ extension RocketListScreenViewModelImpl: RocketListScreenViewModel {
 
     func onRocketTap(rocketId: String) {
         selectedRocketId = rocketId
+    }
+
+    func onPullToRefresh() {
+        loadRockets()
     }
 }
