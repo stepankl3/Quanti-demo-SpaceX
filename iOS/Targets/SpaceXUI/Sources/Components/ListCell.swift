@@ -16,16 +16,17 @@ public struct ListCell: View {
 
     // MARK: - Body
     public var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: 16) {
             image
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .foregroundColor(.pink)
                 .fixedSize(horizontal: true, vertical: false)
-                .padding(.vertical, 8)
-            VStack(alignment: .leading, spacing: 8) {
+                .padding(.vertical, 12)
+            VStack(alignment: .leading, spacing: 4) {
                 Text(title)
                     .font(.headline)
+                    .fontWeight(.bold)
                     .foregroundColor(Color(.primaryText))
                 Text(description)
                     .font(.subheadline)
@@ -38,7 +39,6 @@ public struct ListCell: View {
                 .foregroundColor(Color(.secondaryText))
                 .frame(width: 18, height: 18)
         }
-        .padding(8)
     }
 }
 

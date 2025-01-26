@@ -32,6 +32,7 @@ struct RocketListScreen<ViewModel>: View where ViewModel: RocketListScreenViewMo
         .navigationDestination(item: $viewModel.selectedRocketId) { rocketId in
             Screens.rocketDetail
         }
+        .background(SpaceXColor.elevatedBackground)
         .navigationTitle(SpaceXStrings.ListScreen.title)
         .navigationBarTitleDisplayMode(.large)
     }
@@ -42,17 +43,20 @@ extension RocketListScreen {
 
     @ViewBuilder
     func rocketList(rockets: [Rocket]) -> some View {
-        List(rockets) { rocket in
-            ListCell(image: SpaceXAsset.rocket,
-                     title: rocket.name,
-                     description: "\(SpaceXStrings.ListScreen.Cell.firstFlight): \(rocket.firstFlight.dateString)")
-            .onTapGesture {
-                viewModel.onRocketTap(rocketId: rocket.id)
+        List {
+            ForEach(rockets) { rocket in
+                ListCell(image: SpaceXAsset.rocket,
+                         title: rocket.name,
+                         description: "\(SpaceXStrings.ListScreen.Cell.firstFlight): \(rocket.firstFlight.dateString)")
+                .onTapGesture {
+                    viewModel.onRocketTap(rocketId: rocket.id)
+                }
+                .alignmentGuide(.listRowSeparatorLeading) { _ in
+                    0
+                }
             }
-            .padding(.vertical, 8)
-        }
-        .alignmentGuide(.listRowSeparatorLeading) {_ in 
-            16
+            .listRowBackground(SpaceXColor.background)
+
         }
     }
 
