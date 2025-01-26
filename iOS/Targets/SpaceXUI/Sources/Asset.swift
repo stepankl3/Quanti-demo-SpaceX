@@ -9,4 +9,5 @@ public struct SpaceXAsset {
     static public let idleRocket = Image(.rocketIdle)
     static public let rocket = Image(.rocket)
     static public let rocketError = Image(.rocketError)
+    static public let burn = Image(.burn)
 }

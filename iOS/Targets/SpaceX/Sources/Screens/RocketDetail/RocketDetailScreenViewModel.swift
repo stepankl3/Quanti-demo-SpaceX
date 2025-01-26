@@ -3,15 +3,18 @@ import SpaceXKit
 import Factory
 
 @MainActor
-public protocol RocketDetailScreenViewModel: ObservableObject {
+protocol RocketDetailScreenViewModel: ObservableObject {
 
     var screenState: RocketDetailScreenState { get }
+    var screenTitle: String { get }
+
     func onAppear()
     func onLaunchTapped()
+    func onRetryTapped()
 }
 
 // MARK: - Screen State Enum
-public enum RocketDetailScreenState {
+enum RocketDetailScreenState {
     case loading
     case error
     case data(detail: RocketDetail)
@@ -26,19 +29,21 @@ public class RocketDetailScreenViewModelImpl {
     private let rocketId: String
 
     // MARK: - Properties
-    @Published public var screenState: RocketDetailScreenState = .loading
+    @Published var screenState: RocketDetailScreenState = .loading
+    @Published var screenTitle: String = ""
 
     // MARK: - Init
-    public init(rocketId: String) {
+    init(rocketId: String) {
         self.rocketId = rocketId
     }
 
-    public func loadRocketDetail() {
+    func loadRocketDetail() {
         Task {
             do {
                 screenState = .loading
-                let detail = try await repository.getRocket(id: rocketId)
-                screenState = .data(detail: detail)
+                let rocketDetail = try await repository.getRocket(id: rocketId)
+                screenTitle = rocketDetail.name
+                screenState = .data(detail: rocketDetail)
             } catch {
                 screenState = .error
             }
@@ -49,12 +54,16 @@ public class RocketDetailScreenViewModelImpl {
 // MARK: - Protocol Conformance
 extension RocketDetailScreenViewModelImpl: RocketDetailScreenViewModel {
 
-    public func onLaunchTapped() {
+    func onLaunchTapped() {
         print("Launch tapped")
     }
     
 
-    public func onAppear() {
+    func onAppear() {
+        loadRocketDetail()
+    }
+
+    func onRetryTapped() {
         loadRocketDetail()
     }
 }

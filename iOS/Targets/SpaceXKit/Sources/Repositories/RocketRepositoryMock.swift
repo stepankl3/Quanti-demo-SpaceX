@@ -24,7 +24,7 @@ public class RocketRepositoryMock: RocketRepository {
             massKg: 40,
             firstStage: Stage(reusable: true, engines: 9, fuelAmountTons: 390, burnTimeSeconds: 162 ),
             secondStage: Stage(reusable: false, engines: 1, fuelAmountTons: 90, burnTimeSeconds: 397),
-            imagesUrl: []
+            imagesUrl: [URL(string: "https://imgur.com/DaCfMsj.jpg")!]
         )
     }
 }

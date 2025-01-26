@@ -1,7 +1,27 @@
 "common.ok" = "Ok";
 "common.cancel" = "Cancel";
 "common.retry" = "Retry";
+"common.seconds" = "s";
+"common.tons" = "t";
+"common.meters" = "m";
 "listScreen.cell.firstFlight" = "First flight";
 "listScreen.title" = "Rockets";
 "listScreen.emptyDescription" = "We are sorry no rockets are currently available";
 "listScreen.errorDescription" = "Something went wrong please try again";
+"rocketDetailScreen.errorDescription" = "Something went wrong please try again";
+"rocketDetailScreen.navigation.launch" = "Launch";
+"rocketDetailScreen.sectionOverview.title" = "Overview";
+"rocketDetailScreen.sectionParameter.title" = "Parameters";
+"rocketDetailScreen.sectionParameter.diameter" = "diameter";
+"rocketDetailScreen.sectionParameter.height" = "height";
+"rocketDetailScreen.sectionParameter.mass" = "mass";
+"rocketDetailScreen.sectionOverView.title" = "Overview";
+"rocketDetailScreen.sectionStage.first" = "First Stage";
+"rocketDetailScreen.sectionStage.second" = "Second Stage";
+"rocketDetailScreen.sectionStage.reusable" = "reusable";
+"rocketDetailScreen.sectionStage.nonreusable" = "not reusable";
+"rocketDetailScreen.sectionStage.engines" = "engines";
+"rocketDetailScreen.sectionStage.fuel" = "tons of fuel";
+"rocketDetailScreen.sectionStage.burnTime" = "seconds burn time";
+"rocketDetailScreen.sectionPhotos.title" = "Photos";
+
