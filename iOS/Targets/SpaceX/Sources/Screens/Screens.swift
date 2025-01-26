@@ -9,8 +9,8 @@ enum Screens {
         return RocketListScreen(viewModel: viewModel)
     }
 
-    static var rocketDetail: RocketDetailScreen<RocketDetailScreenViewModelImpl> {
-        let viewModel = RocketDetailScreenViewModelImpl()
+    static func rocketDetail(id: String) -> RocketDetailScreen<RocketDetailScreenViewModelImpl> {
+        let viewModel = RocketDetailScreenViewModelImpl(rocketId: id)
         return RocketDetailScreen(viewModel: viewModel)
     }
 }

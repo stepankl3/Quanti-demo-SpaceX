@@ -31,6 +31,23 @@ extension RocketRepositoryImpl: RocketRepository {
     }
 
     public func getRocket(id: String) async throws -> RocketDetail {
-        throw NSError(domain: "NotImplemented", code: 1)
+        let rocketDetailResponse = try await rocketDataSource.getRocket(id: id)
+
+        guard let firstFlightDate = rocketDetailResponse.first_flight.parseApiDate() else {
+            throw NetworkError.invalidResponse
+        }
+
+        return RocketDetail(
+            id: id,
+            name: rocketDetailResponse.rocket_name,
+            firstFlight: firstFlightDate,
+            description: rocketDetailResponse.description,
+            heightMeters: rocketDetailResponse.height.meters,
+            diameterMeters: rocketDetailResponse.diameter.meters,
+            massKg: rocketDetailResponse.mass.kg,
+            firstStage: rocketDetailResponse.first_stage.toStage(),
+            secondStage: rocketDetailResponse.second_stage.toStage(),
+            imagesUrl: rocketDetailResponse.flickr_images.compactMap { URL(string: $0)}
+        )
     }
 }

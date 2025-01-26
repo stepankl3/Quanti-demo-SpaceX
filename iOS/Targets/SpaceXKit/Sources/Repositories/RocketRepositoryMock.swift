@@ -15,15 +15,16 @@ public class RocketRepositoryMock: RocketRepository {
 
     public func getRocket(id: String) async -> RocketDetail {
         return RocketDetail(
+            id: "1",
             name: "Falcon 9",
             firstFlight: Date(timeIntervalSince1970: 1270512000),
             description: "A two-stage rocket designed by SpaceX for reliable transport of satellites and Dragon spacecraft.",
-            height: "90m",
-            diameter: "40m",
-            mass: "500t",
-            firstStage: Stage(reusable: true, engines: 9, fuelAmount: "385 tons", burnTime: "162 seconds"),
-            secondStage: Stage(reusable: false, engines: 1, fuelAmount: "90 tons", burnTime: "397 seconds"),
-            imagesUrl: ["falcon9_launch"]
+            heightMeters: 90,
+            diameterMeters: 40,
+            massKg: 40,
+            firstStage: Stage(reusable: true, engines: 9, fuelAmountTons: 390, burnTimeSeconds: 162 ),
+            secondStage: Stage(reusable: false, engines: 1, fuelAmountTons: 90, burnTimeSeconds: 397),
+            imagesUrl: []
         )
     }
 }

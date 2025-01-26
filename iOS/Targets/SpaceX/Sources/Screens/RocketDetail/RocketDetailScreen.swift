@@ -33,9 +33,9 @@ public struct RocketDetailScreen<ViewModel>: View where ViewModel: RocketDetailS
                         Text("Parameters")
                             .font(.title2.bold())
                         HStack {
-                            ParameterView(title: "\(detail.height)", subtitle: "height")
-                            ParameterView(title: "\(detail.diameter)", subtitle: "diameter")
-                            ParameterView(title: "\(detail.mass)", subtitle: "mass")
+                            ParameterView(title: "\(detail.heightMeters)", subtitle: "height")
+                            ParameterView(title: "\(detail.diameterMeters)", subtitle: "diameter")
+                            ParameterView(title: "\(detail.massKg)", subtitle: "mass")
                         }
 
                         StageView(title: "First Stage", stage: detail.firstStage)
@@ -101,9 +101,9 @@ struct StageView: View {
                 }
                 HStack {
                     Image(systemName: "fuelpump")
-                    Text("\(stage.fuelAmount) of fuel")
+                    Text("\(stage.fuelAmountTons) of fuel")
                 }
-                if let burnTime = stage.burnTime {
+                if let burnTime = stage.burnTimeSeconds {
                     HStack {
                         Image(systemName: "clock")
                         Text("\(burnTime) burn time")
@@ -120,6 +120,6 @@ struct StageView: View {
 // MARK: - Preview
 struct RocketDetailScreen_Previews: PreviewProvider {
     static var previews: some View {
-        RocketDetailScreen(viewModel: RocketDetailScreenViewModelImpl())
+        RocketDetailScreen(viewModel: RocketDetailScreenViewModelImpl(rocketId: "12"))
     }
 }

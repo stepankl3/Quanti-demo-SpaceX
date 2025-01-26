@@ -33,10 +33,6 @@ public class RocketDetailScreenViewModelImpl {
         self.rocketId = rocketId
     }
 
-    init() {
-        self.rocketId = "Fake"
-    }
-
     public func loadRocketDetail() {
         Task {
             do {

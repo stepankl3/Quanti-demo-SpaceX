@@ -30,7 +30,7 @@ struct RocketListScreen<ViewModel>: View where ViewModel: RocketListScreenViewMo
             viewModel.onAppear()
         }
         .navigationDestination(item: $viewModel.selectedRocketId) { rocketId in
-            Screens.rocketDetail
+            Screens.rocketDetail(id: rocketId)
         }
         .background(SpaceXColor.elevatedBackground)
         .navigationTitle(SpaceXStrings.ListScreen.title)

@@ -13,4 +13,13 @@ enum RocketRequest {
             body: nil
         )
     }
+
+    static func getRocket(id: String) -> Endpoint {
+        return Endpoint(
+            path: "rockets/\(id)",
+            method: "GET",
+            queryItems: nil,
+            body: nil
+        )
+    }
 }
