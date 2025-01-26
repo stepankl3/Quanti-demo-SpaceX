@@ -7,36 +7,50 @@ import ProjectDescription
 
 extension Project {
     /// Helper function to create the Project for this ExampleApp
-    public static func app(name: String, destinations: Destinations, additionalTargets: [String]) -> Project {
+    public static func app(name: String,
+                           bundleId: String,
+                           packages: [Package],
+                           dependencies: [TargetDependency],
+                           destinations: Destinations,
+                           additionalTargets: [String]) -> Project {
+
         var targets = makeAppTargets(name: name,
                                      destinations: destinations,
                                      dependencies: additionalTargets.map { TargetDependency.target(name: $0) })
-        targets += additionalTargets.flatMap({ makeFrameworkTargets(name: $0, destinations: destinations) })
+        targets += additionalTargets.flatMap({ makeFrameworkTargets(name: $0,
+                                                                    bundleId: bundleId,
+                                                                    destinations: destinations,
+                                                                    dependencies: dependencies) })
         return Project(name: name,
-                       organizationName: "tuist.io",
-                       targets: targets)
+                       organizationName: "LittleBoy",
+                       packages: packages,
+                       targets: targets,
+                       resourceSynthesizers: [.strings()])
     }
 
     // MARK: - Private
 
     /// Helper function to create a framework target and an associated unit test target
-    private static func makeFrameworkTargets(name: String, destinations: Destinations) -> [Target] {
+    private static func makeFrameworkTargets(name: String,
+                                             bundleId: String,
+                                             destinations: Destinations,
+                                             dependencies: [TargetDependency]) -> [Target] {
         let sources = Target(name: name,
-                destinations: destinations,
-                product: .framework,
-                bundleId: "io.tuist.\(name)",
-                infoPlist: .default,
-                sources: ["Targets/\(name)/Sources/**"],
-                resources: [],
-                dependencies: [])
+                             destinations: destinations,
+                             product: .framework,
+                             bundleId: "\(bundleId).\(name)",
+                             infoPlist: .default,
+                             sources: ["Targets/\(name)/Sources/**"],
+                             resources: ["Targets/\(name)/Resources/**"],
+                             dependencies: dependencies)
         let tests = Target(name: "\(name)Tests",
-                destinations: destinations,
-                product: .unitTests,
-                bundleId: "io.tuist.\(name)Tests",
-                infoPlist: .default,
-                sources: ["Targets/\(name)/Tests/**"],
-                resources: [],
-                dependencies: [.target(name: name)])
+                           destinations: destinations,
+                           product: .unitTests,
+                           bundleId: "\(bundleId).\(name)Tests",
+                           infoPlist: .default,
+                           sources: ["Targets/\(name)/Tests/**"],
+                           resources: ["Targets/\(name)/Resources/**"],
+                           dependencies: [.target(name: name)])
         return [sources, tests]
     }
 
@@ -46,7 +60,7 @@ extension Project {
             "CFBundleShortVersionString": "1.0",
             "CFBundleVersion": "1",
             "UILaunchStoryboardName": "LaunchScreen"
-            ]
+        ]
 
         let mainTarget = Target(
             name: name,
@@ -68,7 +82,7 @@ extension Project {
             sources: ["Targets/\(name)/Tests/**"],
             dependencies: [
                 .target(name: "\(name)")
-        ])
+            ])
         return [mainTarget, testTarget]
     }
 }

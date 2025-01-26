@@ -1,6 +1,5 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
-import MyPlugin
 
 /*
                 +-------------+
@@ -18,12 +17,22 @@ import MyPlugin
 
  */
 
+let packages: [Package] = [
+    .package(url: "https://github.com/hmlongco/Factory", from: "2.3.2"),
+    .package(url: "https://github.com/onevcat/Kingfisher", from: "8.0.0")
+]
+
+let dependencies: [TargetDependency] = [
+    .package(product: "Factory"),
+    .package(product: "Kingfisher")
+]
+
 // MARK: - Project
-
-// Local plugin loaded
-let localHelper = LocalHelper(name: "MyPlugin")
-
 // Creates our project using a helper function defined in ProjectDescriptionHelpers
 let project = Project.app(name: "SpaceX",
+                          bundleId: "stepan.kloucek.SpaceX",
+                          packages: packages,
+                          dependencies: dependencies,
                           destinations: .iOS,
                           additionalTargets: ["SpaceXKit", "SpaceXUI"])
+
