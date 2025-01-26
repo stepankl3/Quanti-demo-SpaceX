@@ -38,12 +38,13 @@ extension Project {
                                              dependencies: [TargetDependency]) -> [Target] {
         let sources = Target(name: name,
                              destinations: destinations,
-                             product: .dynamicLibrary,
+                             product: .framework,
                              bundleId: "\(bundleId).\(name)",
                              infoPlist: .default,
                              sources: ["Targets/\(name)/Sources/**"],
                              resources: ["Targets/\(name)/Resources/**"],
-                             dependencies: dependencies)
+                             dependencies: dependencies,
+                             settings: .settings(configurations: .init()))
         let tests = Target(name: "\(name)Tests",
                            destinations: destinations,
                            product: .unitTests,
@@ -74,7 +75,8 @@ extension Project {
             infoPlist: .extendingDefault(with: infoPlist),
             sources: ["Targets/\(name)/Sources/**"],
             resources: ["Targets/\(name)/Resources/**"],
-            dependencies: dependencies
+            dependencies: dependencies,
+            settings: .settings(configurations: .init())
         )
 
         let testTarget = Target(

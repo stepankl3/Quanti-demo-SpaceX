@@ -1,0 +1,7 @@
+"common.ok" = "Ok";
+"common.cancel" = "Cancel";
+"common.retry" = "Retry";
+"listScreen.cell.firstFlight" = "First flight";
+"listScreen.title" = "Rockets";
+"listScreen.emptyDescription" = "We are sorry no rockets are currently available";
+"listScreen.errorDescription" = "Something went wrong please try again";

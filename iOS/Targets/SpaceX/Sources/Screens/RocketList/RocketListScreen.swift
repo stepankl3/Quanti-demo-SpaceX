@@ -1,53 +1,25 @@
 import SwiftUI
+import SpaceXUI
+import SpaceXKit
 
 struct RocketListScreen<ViewModel>: View where ViewModel: RocketListScreenViewModel {
 
     // MARK: - Properties
-    @ObservedObject var viewModel: ViewModel
+    @StateObject var viewModel: ViewModel
 
     // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Rockets")
-                .font(.largeTitle.bold())
-                .padding(.horizontal)
-
             switch viewModel.screenState {
             case .loading:
-                ProgressView()
+                ScreenLoader()
             case .error:
-                VStack {
-                    Text("An error occurred. Tap to retry.")
-                        .foregroundColor(.red)
-                        .onTapGesture {
-                            viewModel.onErrorTap()
-                        }
-                }
+                errorView
             case .data(let rockets):
                 if rockets.isEmpty {
-                    Text("No rockets available.")
-                        .foregroundColor(.gray)
+                    emptyView
                 } else {
-                    List(rockets) { rocket in
-                        HStack {
-                            Image(systemName: "rocket.fill")
-                                .foregroundColor(.pink)
-                            VStack(alignment: .leading) {
-                                Text(rocket.name)
-                                    .font(.headline)
-                                Text("First flight: \(formattedDate(rocket.firstFlight))")
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
-                            }
-                            Spacer()
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(.gray)
-                        }
-                        .onTapGesture {
-                            viewModel.onRocketTap(rocketId: rocket.id)
-                        }
-                        .padding(.vertical, 8)
-                    }
+                    rocketList(rockets: rockets)
                 }
             }
         }
@@ -57,18 +29,64 @@ struct RocketListScreen<ViewModel>: View where ViewModel: RocketListScreenViewMo
         .navigationDestination(item: $viewModel.selectedRocketId) { rocketId in
             Screens.rocketDetail
         }
-    }
-
-    private func formattedDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        return formatter.string(from: date)
+        .navigationTitle(SpaceXStrings.ListScreen.title)
+        .navigationBarTitleDisplayMode(.large)
     }
 }
 
-// MARK: - Preview
-struct RocketsView_Previews: PreviewProvider {
-    static var previews: some View {
+// MARK: - Supporting views
+extension RocketListScreen {
+
+    @ViewBuilder
+    func rocketList(rockets: [Rocket]) -> some View {
+        List(rockets) { rocket in
+            ListCell(image: SpaceXAsset.rocket,
+                     title: rocket.name,
+                     description: "\(SpaceXStrings.ListScreen.Cell.firstFlight): \(rocket.firstFlight.dateString)")
+            .onTapGesture {
+                viewModel.onRocketTap(rocketId: rocket.id)
+            }
+            .padding(.vertical, 8)
+        }
+    }
+
+    @ViewBuilder
+    var errorView: some View {
+        ErrorPage(text: SpaceXStrings.ListScreen.errorDescription,
+                  extraContent: {
+            PrimaryButton(title: SpaceXStrings.Common.retry,
+                          action: viewModel.onErrorTap)
+        })
+    }
+
+    @ViewBuilder
+    var emptyView: some View {
+        ErrorPage(text: SpaceXStrings.ListScreen.emptyDescription,
+                  extraContent: { EmptyView() })
+    }
+}
+
+// MARK: - Previews
+#Preview {
+    NavigationStack {
+        RocketListScreen(viewModel: RocketListScreenViewModelMock(startingState: .data(rockets: [])))
+    }
+}
+
+#Preview {
+    NavigationStack {
+        RocketListScreen(viewModel: RocketListScreenViewModelMock(startingState: .error))
+    }
+}
+
+#Preview {
+    NavigationStack {
+        RocketListScreen(viewModel: RocketListScreenViewModelMock(startingState: .loading))
+    }
+}
+
+#Preview {
+    NavigationStack {
         RocketListScreen(viewModel: RocketListScreenViewModelImpl())
     }
 }
