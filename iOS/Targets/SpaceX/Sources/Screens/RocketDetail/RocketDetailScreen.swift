@@ -19,6 +19,7 @@ struct RocketDetailScreen<ViewModel>: View where ViewModel: RocketDetailScreenVi
             switch viewModel.screenState {
             case .loading:
                 ScreenLoader()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             case .error:
                 errorView
             case .data(let detail):
@@ -168,7 +169,7 @@ extension RocketDetailScreen {
 struct RocketDetailScreen_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            RocketDetailScreen(viewModel: RocketDetailScreenViewModelImpl(rocketId: "12"))
+            RocketDetailScreen(viewModel: RocketDetailScreenViewModelMock(screenState: .error))
         }
     }
 }
