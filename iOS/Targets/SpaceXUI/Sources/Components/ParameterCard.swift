@@ -22,9 +22,20 @@ public struct ParameterCard: View {
                 .font(.subheadline)
                 .foregroundColor(SpaceXColor.opaqueText)
         }
-        .padding(16)
-        .frame(width: 100, height: 100)
+        .frame(maxWidth: 200, maxHeight: 200)
+        .padding(8)
         .background(SpaceXColor.primary)
         .cornerRadius(12)
+
     }
+}
+
+#Preview {
+    ParameterCard(title: "9m", subtitle: "diameter")
+    ParameterCard(title: "9m", subtitle: "diameter and other fancy info")
+    ParameterCard(title: "1 300 t", subtitle: "diameter")
+    ParameterCard(title: "1300t", subtitle: "diameter")
+        .frame(width: 100, height: 100)
+    ParameterCard(title: "118m", subtitle: "diameter")
+        .frame(width: 200, height: 200)
 }

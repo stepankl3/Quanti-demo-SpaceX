@@ -19,9 +19,9 @@ public class RocketRepositoryMock: RocketRepository {
             name: "Falcon 9",
             firstFlight: Date(timeIntervalSince1970: 1270512000),
             description: "A two-stage rocket designed by SpaceX for reliable transport of satellites and Dragon spacecraft.",
-            heightMeters: 90,
+            heightMeters: 188,
             diameterMeters: 40,
-            massKg: 40,
+            massKg: 1300000,
             firstStage: Stage(reusable: true, engines: 9, fuelAmountTons: 390, burnTimeSeconds: 162 ),
             secondStage: Stage(reusable: false, engines: 1, fuelAmountTons: 90, burnTimeSeconds: 397),
             imagesUrl: [URL(string: "https://imgur.com/DaCfMsj.jpg")!]

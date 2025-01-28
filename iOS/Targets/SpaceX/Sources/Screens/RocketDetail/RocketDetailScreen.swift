@@ -7,6 +7,11 @@ struct RocketDetailScreen<ViewModel>: View where ViewModel: RocketDetailScreenVi
 
     // MARK: - Dependencies
     @StateObject var viewModel: ViewModel
+    @Environment(\.horizontalSizeClass) var sizeClass
+
+    // MARK: - Properties
+    @State private var stageSquareSize: CGFloat = 100
+    private let stageCardSpacing: CGFloat = 16
 
     // MARK: - Body
     public var body: some View {
@@ -75,23 +80,45 @@ extension RocketDetailScreen {
             .font(.headline.bold())
             .foregroundStyle(SpaceXColor.primaryText)
             .padding(.top, 8)
-        // TODO: Use geometry reader
-        HStack(alignment: .center, spacing: 16) {
+
+        HStack(spacing: stageCardSpacing) {
             ParameterCard(title: "\(detail.heightMeters.rounded().formatted())\(SpaceXStrings.Common.meters)",
                           subtitle: SpaceXStrings.RocketDetailScreen.SectionParameter.height)
+            .frame(width: stageSquareSize, height: stageSquareSize)
             ParameterCard(title: "\(detail.diameterMeters.rounded().formatted())\(SpaceXStrings.Common.meters)",
                           subtitle: SpaceXStrings.RocketDetailScreen.SectionParameter.diameter)
+            .frame(width: stageSquareSize, height: stageSquareSize)
             ParameterCard(title: "\((detail.massKg / 1000).formatted())\(SpaceXStrings.Common.tons)",
                           subtitle: SpaceXStrings.RocketDetailScreen.SectionParameter.mass)
+            .frame(width: stageSquareSize, height: stageSquareSize)
+
         }
+        .frame(maxWidth: .infinity)
+        .background(
+            GeometryReader { geometry in
+                Color.clear
+                    .onAppear {
+                        stageSquareSize = (geometry.size.width - 2 * stageCardSpacing) / 3
+                    }
+            }
+        )
     }
 
     @ViewBuilder
     func stagesSection(detail: RocketDetail) -> some View {
-        RowsCard(title: SpaceXStrings.RocketDetailScreen.SectionStage.first,
-                 rows: getStageRows(stage: detail.firstStage))
-        RowsCard(title: SpaceXStrings.RocketDetailScreen.SectionStage.second,
-                 rows: getStageRows(stage: detail.secondStage))
+        if sizeClass == .compact {
+            RowsCard(title: SpaceXStrings.RocketDetailScreen.SectionStage.first,
+                     rows: getStageRows(stage: detail.firstStage))
+            RowsCard(title: SpaceXStrings.RocketDetailScreen.SectionStage.second,
+                     rows: getStageRows(stage: detail.secondStage))
+        } else {
+            HStack {
+                RowsCard(title: SpaceXStrings.RocketDetailScreen.SectionStage.first,
+                         rows: getStageRows(stage: detail.firstStage))
+                RowsCard(title: SpaceXStrings.RocketDetailScreen.SectionStage.second,
+                         rows: getStageRows(stage: detail.secondStage))
+            }
+        }
     }
 
     @ViewBuilder
