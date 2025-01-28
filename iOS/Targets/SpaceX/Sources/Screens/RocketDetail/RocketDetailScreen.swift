@@ -41,6 +41,7 @@ struct RocketDetailScreen<ViewModel>: View where ViewModel: RocketDetailScreenVi
                 }
             }
         }
+        .background(SpaceXColor.background)
         .navigationDestination(item: $viewModel.destination) { destination in
             switch destination {
             case .launch:
