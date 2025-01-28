@@ -21,7 +21,7 @@ class LaunchScreenViewModelImpl: ObservableObject {
     @Published var rocketOffset = 0
     @Published var shouldShowLaunchButton = false
 
-    private let launchedOffset = -600
+    private let launchedOffset = Int(-UIScreen.main.bounds.height * 1.5)
 
     // MARK: - Dependencies
     private let motionManager = CMMotionManager()

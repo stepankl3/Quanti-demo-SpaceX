@@ -13,6 +13,7 @@ struct RocketListScreen<ViewModel>: View where ViewModel: RocketListScreenViewMo
             switch viewModel.screenState {
             case .loading:
                 ScreenLoader()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             case .error:
                 errorView
             case .data(let rockets):
@@ -24,7 +25,7 @@ struct RocketListScreen<ViewModel>: View where ViewModel: RocketListScreenViewMo
             }
         }
         .refreshable {
-            viewModel.onPullToRefresh()
+            await viewModel.onPullToRefresh()
         }
         .onAppear {
             viewModel.onAppear()
@@ -52,12 +53,13 @@ extension RocketListScreen {
                     viewModel.onRocketTap(rocketId: rocket.id)
                 }
                 .alignmentGuide(.listRowSeparatorLeading) { _ in
-                    0
+                    8
                 }
             }
             .listRowBackground(SpaceXColor.background)
-
         }
+        .contentMargins(.top, 16)
+        .listStyle(.insetGrouped)
     }
 
     @ViewBuilder

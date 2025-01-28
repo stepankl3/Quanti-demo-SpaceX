@@ -11,25 +11,28 @@ struct LaunchScreen<ViewModel>: View where ViewModel: LaunchScreenViewModel {
 
     // MARK: - Body
     var body: some View {
-        VStack {
+        VStack(spacing: 24) {
             Spacer()
+            rocketImage
+                .scaledToFit()
+                .frame(width: 128)
+                .offset(y: CGFloat(viewModel.rocketOffset))
+                .animation(.linear(duration: 4), value: viewModel.rocketOffset)
             Text(viewModel.isRocketLaunched ? SpaceXStrings.LaunchScreen.launched : SpaceXStrings.LaunchScreen.ready)
-                .font(.subheadline)
+                .font(.title3)
                 .foregroundStyle(SpaceXColor.primaryText)
-                .padding(.vertical, 64)
-                .padding(.bottom, 120)
+                .padding(.horizontal, 96)
+                .multilineTextAlignment(.center)
+                .padding(.bottom, 32)
             if viewModel.shouldShowLaunchButton {
                 PrimaryButton(title: SpaceXStrings.LaunchScreen.launchButton) {
                     viewModel.launchTapped()
                 }
             }
         }
+        .padding(.bottom, 32)
         .overlay {
-            rocketImage
-                .scaledToFit()
-                .frame(width: 100)
-                .offset(y: CGFloat(viewModel.rocketOffset))
-                .animation(.linear(duration: 4), value: viewModel.rocketOffset)
+
         }
         .onAppear {
             viewModel.onAppear()

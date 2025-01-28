@@ -19,13 +19,13 @@ public struct ParameterCard: View {
                 .font(.title.bold())
                 .foregroundColor(SpaceXColor.opaqueText)
             Text(subtitle)
-                .font(.subheadline)
+                .font(.title2)
                 .foregroundColor(SpaceXColor.opaqueText)
         }
         .frame(maxWidth: 200, maxHeight: 200)
         .padding(8)
         .background(SpaceXColor.primary)
-        .cornerRadius(12)
+        .cornerRadius(16)
 
     }
 }

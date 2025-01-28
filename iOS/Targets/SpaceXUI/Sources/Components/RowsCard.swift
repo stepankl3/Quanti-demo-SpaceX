@@ -26,17 +26,17 @@ public struct RowsCard: View {
 
     // MARK: - Body
     public var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 16) {
             Text(title)
-                .font(.headline.bold())
+                .font(.title3.bold())
             ForEach(rows) { row in
-                HStack {
+                HStack(spacing: 12) {
                     row.image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(height: 16)
+                        .frame(height: 24)
                     Text(row.text)
-                        .font(.subheadline)
+                        .font(.body)
                         .foregroundStyle(SpaceXColor.primaryText)
                     Spacer()
                 }
@@ -44,6 +44,6 @@ public struct RowsCard: View {
         }
         .padding()
         .background(SpaceXColor.elevatedBackground)
-        .cornerRadius(12)
+        .cornerRadius(16)
     }
 }

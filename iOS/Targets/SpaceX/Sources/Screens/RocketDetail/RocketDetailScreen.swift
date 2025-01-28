@@ -67,10 +67,10 @@ extension RocketDetailScreen {
     func overViewSection(detail: RocketDetail) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(SpaceXStrings.RocketDetailScreen.SectionOverview.title)
-                .font(.headline.bold())
+                .font(.title3.bold())
                 .foregroundStyle(SpaceXColor.primaryText)
             Text(detail.description)
-                .font(.subheadline)
+                .font(.body)
                 .foregroundStyle(SpaceXColor.primaryText)
         }
     }
@@ -78,7 +78,7 @@ extension RocketDetailScreen {
     @ViewBuilder
     func parameterSection(detail: RocketDetail) -> some View {
         Text(SpaceXStrings.RocketDetailScreen.SectionParameter.title)
-            .font(.headline.bold())
+            .font(.title3.bold())
             .foregroundStyle(SpaceXColor.primaryText)
             .padding(.top, 8)
 
@@ -126,8 +126,8 @@ extension RocketDetailScreen {
     func photosSection(photos: [URL]) -> some View {
         if !photos.isEmpty {
             Text(SpaceXStrings.RocketDetailScreen.SectionPhotos.title)
-                .font(.title2.bold())
-            LazyVStack(spacing: 8) {
+                .font(.title3.bold())
+            LazyVStack(spacing: 16) {
                 ForEach(photos, id: \.self) { photo in
                     KFImage(photo)
                         .resizable()
@@ -169,7 +169,7 @@ extension RocketDetailScreen {
 struct RocketDetailScreen_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            RocketDetailScreen(viewModel: RocketDetailScreenViewModelMock(screenState: .error))
+            RocketDetailScreen(viewModel: RocketDetailScreenViewModelImpl(rocketId: "a"))
         }
     }
 }

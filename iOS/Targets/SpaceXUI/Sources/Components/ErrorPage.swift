@@ -18,13 +18,16 @@ public struct ErrorPage<ContentView: View>: View {
             VStack {
                 Spacer()
                 SpaceXAsset.rocketError
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 280)
             }
         }
         .ignoresSafeArea()
         .overlay(alignment: .center) {
             VStack {
                 Text(text)
-                    .font(.title2)
+                    .font(.title3)
                     .foregroundStyle(SpaceXColor.primaryText)
                     .padding(.bottom, 64)
                 extraContent

@@ -23,6 +23,7 @@ public struct ListCell: View {
                 .foregroundColor(.pink)
                 .fixedSize(horizontal: true, vertical: false)
                 .padding(.vertical, 12)
+                .padding(.leading, 8)
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
                     .font(.headline)
