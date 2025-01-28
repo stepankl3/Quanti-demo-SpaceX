@@ -11,7 +11,7 @@ protocol RocketListScreenViewModel: ObservableObject {
     func onErrorTap()
     func onAppear()
     func onRocketTap(rocketId: String)
-    func onPullToRefresh()
+    func onPullToRefresh() async
 }
 
 enum RocketListScreenState {
@@ -34,7 +34,6 @@ class RocketListScreenViewModelImpl: ObservableObject {
     func loadRockets() {
         Task {
             do {
-                screenState = .loading
                 let rockets = try await rocketRepository.getAllRockets()
                 screenState = .data(rockets: rockets)
             } catch {
@@ -48,10 +47,12 @@ class RocketListScreenViewModelImpl: ObservableObject {
 extension RocketListScreenViewModelImpl: RocketListScreenViewModel {
 
     func onErrorTap() {
+        screenState = .loading
         loadRockets()
     }
 
     func onAppear() {
+        screenState = .loading
         loadRockets()
     }
 
@@ -59,7 +60,8 @@ extension RocketListScreenViewModelImpl: RocketListScreenViewModel {
         selectedRocketId = rocketId
     }
 
-    func onPullToRefresh() {
+    func onPullToRefresh() async {
         loadRockets()
+        try? await Task.sleep(for: .seconds(1))
     }
 }
