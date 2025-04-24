@@ -4,7 +4,7 @@ final public class RepositoriesContainer: SharedContainer {
 
     static public let shared = RepositoriesContainer()
 
-    public var manager: ContainerManager = {
+    public let manager: ContainerManager = {
         let manager = ContainerManager()
         manager.defaultScope = .cached
         return manager

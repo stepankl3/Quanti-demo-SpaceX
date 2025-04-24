@@ -7,7 +7,7 @@ protocol RocketDataSource {
     func getRocket(id: String) async throws -> RocketDetailResponse
 }
 
-class RocketDataSourceImpl {
+final class RocketDataSourceImpl {
 
     // MARK: Dependecies
     @Injected(\DataSourceContainer.networkManager) var networkManager

@@ -36,23 +36,23 @@ extension Project {
                                              bundleId: String,
                                              destinations: Destinations,
                                              dependencies: [TargetDependency]) -> [Target] {
-        let sources = Target(name: name,
-                             destinations: destinations,
-                             product: .framework,
-                             bundleId: "\(bundleId).\(name)",
-                             infoPlist: .default,
-                             sources: ["Targets/\(name)/Sources/**"],
-                             resources: ["Targets/\(name)/Resources/**"],
-                             dependencies: dependencies,
-                             settings: .settings(configurations: .init()))
-        let tests = Target(name: "\(name)Tests",
-                           destinations: destinations,
-                           product: .unitTests,
-                           bundleId: "\(bundleId).\(name)Tests",
-                           infoPlist: .default,
-                           sources: ["Targets/\(name)/Tests/**"],
-                           resources: ["Targets/\(name)/Resources/**"],
-                           dependencies: [.target(name: name)])
+        let sources = Target.target(name: name,
+                                    destinations: destinations,
+                                    product: .framework,
+                                    bundleId: "\(bundleId).\(name)",
+                                    infoPlist: .default,
+                                    sources: ["Targets/\(name)/Sources/**"],
+                                    resources: ["Targets/\(name)/Resources/**"],
+                                    dependencies: dependencies,
+                                    settings: makeTargetSettings())
+        let tests = Target.target(name: "\(name)Tests",
+                                  destinations: destinations,
+                                  product: .unitTests,
+                                  bundleId: "\(bundleId).\(name)Tests",
+                                  infoPlist: .default,
+                                  sources: ["Targets/\(name)/Tests/**"],
+                                  resources: ["Targets/\(name)/Resources/**"],
+                                  dependencies: [.target(name: name)])
         return [sources, tests]
     }
 
@@ -67,7 +67,7 @@ extension Project {
             "UILaunchStoryboardName": "LaunchScreen"
         ]
 
-        let mainTarget = Target(
+        let mainTarget = Target.target(
             name: name,
             destinations: destinations,
             product: .app,
@@ -76,10 +76,10 @@ extension Project {
             sources: ["Targets/\(name)/Sources/**"],
             resources: ["Targets/\(name)/Resources/**"],
             dependencies: dependencies,
-            settings: .settings(configurations: .init())
+            settings: makeTargetSettings()
         )
 
-        let testTarget = Target(
+        let testTarget = Target.target(
             name: "\(name)Tests",
             destinations: destinations,
             product: .unitTests,
@@ -88,7 +88,13 @@ extension Project {
             sources: ["Targets/\(name)/Tests/**"],
             dependencies: [
                 .target(name: "\(name)")
-            ])
+            ],
+            settings: makeTargetSettings())
         return [mainTarget, testTarget]
+    }
+
+    private static func makeTargetSettings() -> Settings {
+        Settings.settings(base: ["SWIFT_VERSION": "6.0"],
+                          configurations: .init())
     }
 }

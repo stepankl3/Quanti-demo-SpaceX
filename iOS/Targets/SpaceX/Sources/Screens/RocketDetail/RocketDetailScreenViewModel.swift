@@ -44,7 +44,7 @@ public class RocketDetailScreenViewModelImpl {
     }
 
     func loadRocketDetail() {
-        Task {
+        Task { [repository] in
             do {
                 screenState = .loading
                 let rocketDetail = try await repository.getRocket(id: rocketId)

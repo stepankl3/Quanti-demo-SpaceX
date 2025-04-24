@@ -18,7 +18,7 @@ import ProjectDescriptionHelpers
  */
 
 let packages: [Package] = [
-    .package(url: "https://github.com/hmlongco/Factory", from: "2.3.2"),
+    .package(url: "https://github.com/hmlongco/Factory", from: "2.4.5"),
     .package(url: "https://github.com/onevcat/Kingfisher", from: "8.0.0")
 ]
 

@@ -1,4 +1,4 @@
-public struct Stage {
+public struct Stage: Sendable {
 
     public let reusable: Bool
     public let engines: Int

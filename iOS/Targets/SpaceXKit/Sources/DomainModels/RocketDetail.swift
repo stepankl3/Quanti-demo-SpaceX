@@ -1,6 +1,6 @@
 import Foundation
 
-public struct RocketDetail {
+public struct RocketDetail: Sendable {
 
     public let id: String
     public let name: String

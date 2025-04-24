@@ -32,7 +32,7 @@ class RocketListScreenViewModelImpl: ObservableObject {
 
     // MARK: - Util functions
     func loadRockets() {
-        Task {
+        Task { [rocketRepository] in
             do {
                 let rockets = try await rocketRepository.getAllRockets()
                 screenState = .data(rockets: rockets)

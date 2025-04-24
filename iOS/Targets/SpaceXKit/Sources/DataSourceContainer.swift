@@ -5,7 +5,7 @@ final class DataSourceContainer: SharedContainer {
 
     static let shared = DataSourceContainer()
 
-    var manager: ContainerManager = {
+    let manager: ContainerManager = {
         let manager = ContainerManager()
         manager.defaultScope = .cached
         return manager

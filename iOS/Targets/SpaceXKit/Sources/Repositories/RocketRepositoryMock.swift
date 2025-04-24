@@ -1,6 +1,6 @@
 import Foundation
 
-public class RocketRepositoryMock: RocketRepository {
+final public class RocketRepositoryMock: RocketRepository {
 
     public init() {}
 
