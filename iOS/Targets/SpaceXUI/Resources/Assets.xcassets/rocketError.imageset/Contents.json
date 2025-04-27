@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "rocketError.png",
+      "filename" : "rocketError1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "rocketError 1.png",
+      "filename" : "rocketError2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "rocketError 2.png",
+      "filename" : "rocketError.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
